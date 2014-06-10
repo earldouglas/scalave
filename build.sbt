@@ -14,3 +14,7 @@ libraryDependencies ++= Seq(
   , "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
   , "com.twitter" %% "util-eval" % "6.5.0"
 )
+
+ScoverageSbtPlugin.instrumentSettings
+
+CoverallsPlugin.coverallsSettings
