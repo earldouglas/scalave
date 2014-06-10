@@ -1,4 +1,14 @@
 language: scala
 scala:
-  - 2.10.3
-script: "sbt coveralls"
+- 2.10.3
+env:
+  global:
+    secure: KGrE62jF8ilNjyoG1TYKOmV0lvs5qMhgD/GxtxH/bS5HezJHYLRx1ZmPv64jpprrCWPpAfiQbcuht8Pmkjy2o021EkRRXZc0CvEQskpoMz/E94IntDY4h1MEafAWzS48F+yMvguwXakohJBs8NO2wZoMLNReQUcBm9BKHdBySTk=
+script: sbt coveralls package linkWar
+after_success:
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+  wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh ;
+  heroku plugins:install https://github.com/heroku/heroku-deploy ;
+  heroku deploy:war --war target/scalave.war --app scalave ;
+fi
+
