@@ -52,4 +52,11 @@ class ServletTests extends FunSuite with BeforeAndAfterAll {
     assert(res.contains("""<title>Scalave</title>"""))
   }
 
+  test("GET /?src={ val a = 3 ; val b = 5 ; a + b }") {
+    val srcRaw = "{ val a = 3 ; val b = 5 ; a + b }"
+    val src = java.net.URLEncoder.encode(srcRaw)
+    val res = get("http://localhost:8080/?src=" + src)
+    assert(res === "8")
+  }
+
 }
