@@ -2,31 +2,61 @@ package com.earldouglas.scalave.servlets
 
 import scala.xml.NodeSeq
 import javax.servlet.http.HttpServlet
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+
+object `package` {
+
+  private val mf = new com.github.mustachejava.DefaultMustacheFactory()
+  mf.setObjectHandler(new com.twitter.mustache.ScalaObjectHandler)
+
+  implicit class MustacheResponse(res: HttpServletResponse) {
+    def mustache[A](template: String, model: A): Unit = {
+      res.setContentType("text/html")
+      res.setCharacterEncoding("UTF-8")
+      val path = getClass.getClassLoader.getResource(template + ".mustache").getFile
+      val mustache = mf.compile(path)
+      mustache.execute(res.getWriter, model)
+    }
+  }
+
+}
 
 class Scalave extends HttpServlet {
 
-  import javax.servlet.http.HttpServletRequest
-  import javax.servlet.http.HttpServletResponse
-
   val eval = new com.twitter.util.Eval
 
-  override def doGet(req: HttpServletRequest, res: HttpServletResponse) {
-
-    res.setContentType("text/html")
-    res.setCharacterEncoding("UTF-8")
-
-    val responseBody: NodeSeq =
-      <html>
-        <body>
-          <h1>Hello, world!</h1>
-        </body>
-      </html>
-
-    res.getWriter.write(responseBody.toString)
+  def run(src: String, writer: java.io.Writer, json: Boolean): Unit = {
+    val result = 
+      try {
+        eval.apply[Any](src).toString
+      } catch {
+          case e: Exception => e.toString
+      }
+    val output =
+      if (json) result.replaceAll("'", """\'""").
+                       replaceAll("""\n""", """\\n""")
+      else result
+    writer.write(output)
   }
 
-  override def doPost(req: HttpServletRequest, res: HttpServletResponse) {
-    val out = eval.apply[Any](req.getInputStream)
-    res.getWriter.write(out.toString)
-  }
+  case class Model(title: String)
+
+  override def doGet(req: HttpServletRequest, res: HttpServletResponse) =
+    Option(req.getParameter("src")) match {
+      case None =>
+        res.mustache("root", Model(title = "Scalave"))
+      case Some(src) =>
+        Option(req.getParameter("jsonp")) match {
+        case None =>
+          run(src, res.getWriter, false)
+        case Some(jsonp) =>
+          res.getWriter.write(jsonp)
+          res.getWriter.write("('")
+          run(src, res.getWriter, true)
+          res.getWriter.write("');")
+      }
+    }
+
+
 }

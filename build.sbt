@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
   , "org.eclipse.jetty" % "jetty-plus" % "9.1.0.v20131115" % "container"
   , "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
   , "com.twitter" %% "util-eval" % "6.5.0"
+  , "com.github.spullara.mustache.java" % "compiler" % "0.8.9"
 )
 
 libraryDependencies ++= Seq(

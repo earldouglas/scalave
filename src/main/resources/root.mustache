@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    <style>
+      div#input { margin-bottom: 24px; }
+      textarea#src { font-family: Courier New, monospace; font-size: 10pt; }
+      pre.output { margin-top: 24px;
+                   margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #666;
+                   width: 640px; }
+    </style>
+    <script>
+
+      function run() {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        var src = encodeURIComponent(document.getElementById('src').value);
+        script.setAttribute('src', '/?jsonp=println&src=' + src);
+        head.appendChild(script);
+        head.removeChild(script);
+      }
+
+      function println(out) {
+        var output = document.getElementById('output');
+        var pre = document.createElement('pre');
+        pre.className = 'output';
+        pre.innerHTML = out;
+        //body.appendChild(pre);
+        output.insertBefore(pre, output.firstChild);
+      }
+
+    </script>
+  </head>
+  <body>
+    <h1>{{title}}</h1>
+    <div id="input">
+      <div>
+        <button onclick="run()">run</button>
+      </div>
+      <div>
+        <textarea id="src" name="src" rows="8" cols="72"></textarea>
+      </div>
+    </div>
+    <div id="output">
+    </div>
+  </body>
+</head>
