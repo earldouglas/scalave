@@ -8,7 +8,7 @@
 
   <servlet>
     <servlet-name>scalave</servlet-name>
-    <servlet-class>com.earldouglas.scalaeval.servlets.Scalave</servlet-class>
+    <servlet-class>com.earldouglas.scalave.servlets.Scalave</servlet-class>
   </servlet>
 
   <servlet-mapping>
