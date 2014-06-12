@@ -13,7 +13,7 @@ object Evaluator {
     evaluatorT.start
 
     managerT.join
-    evaluatorT.interrupt
+    evaluatorT.stop
 
     evaluator.result getOrElse "(evaluation was terminated after 10 seconds)"
   }
