@@ -1,9 +1,9 @@
 package com.earldouglas.scalave.servlets
 
-import scala.xml.NodeSeq
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import com.earldouglas.scalave.evaluator.Evaluator
 
 object `package` {
 
@@ -24,15 +24,8 @@ object `package` {
 
 class Scalave extends HttpServlet {
 
-  val eval = new com.twitter.util.Eval
-
   def run(src: String, writer: java.io.Writer, json: Boolean): Unit = {
-    val result = 
-      try {
-        eval.apply[Any](src).toString
-      } catch {
-          case e: Exception => e.toString
-      }
+    val result = Evaluator.eval(src)
     val output =
       if (json) result.replaceAll("'", """\'""").
                        replaceAll("""\n""", """\\n""")

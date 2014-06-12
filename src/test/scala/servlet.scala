@@ -59,4 +59,11 @@ class ServletTests extends FunSuite with BeforeAndAfterAll {
     assert(res === "8")
   }
 
+  test("terminates after ten seconds") {
+    val srcRaw = "def loop: Int = loop ; loop"
+    val src = java.net.URLEncoder.encode(srcRaw)
+    val res = get("http://localhost:8080/?src=" + src)
+    assert(res === "(evaluation was terminated after 10 seconds)")
+  }
+
 }
