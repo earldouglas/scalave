@@ -2,59 +2,23 @@
   <head>
     <title>{{title}}</title>
     <style>
-
-      div#input    {
-                     margin-bottom: 24px;
-                   }
-
-      textarea#src {
-                     font-family: Courier New, monospace;
-                     font-size: 10pt;
-                   }
-
-      pre.output   {
-                     padding-left: 12px;
-                     border-left: 1px solid #666;
-                   }
-
+      #forkme { position: absolute; top: 0; right: 0; border: 0; }
+      #embed  { font-family: Courier New, monospace; font-size: 10pt; margin-left: 12px; }
     </style>
-    <script>
-
-      function run() {
-        println("running...");
-        var head = document.getElementsByTagName('head')[0];
-        var script = document.createElement('script');
-        var src = encodeURIComponent(document.getElementById('src').value);
-        script.setAttribute('src', '/?jsonp=println&src=' + src);
-        head.appendChild(script);
-        head.removeChild(script);
-      }
-
-      function println(out) {
-        var output = document.getElementById('output');
-        while (output.firstChild) { output.removeChild(output.firstChild); }
-        var pre = document.createElement('pre');
-        pre.className = 'output';
-        pre.innerHTML = out;
-        output.appendChild(pre);
-      }
-
-    </script>
   </head>
   <body>
     <a href="https://github.com/earldouglas/scalave">
-      <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
+      <img id="forkme" src="forkme.png" alt="fork me">
     </a>
     <h1>{{title}}</h1>
-    <div id="input">
-      <div>
-        <textarea id="src" name="src" rows="8" cols="72"></textarea>
-      </div>
-      <div>
-        <button onclick="run()">run</button>
-      </div>
-    </div>
-    <div id="output">
+    <div id="scalave"></div>
+    <script src="scalave.js"></script>
+    <p>
+      To embed Scalave on your site, add the following snippet:
+    </p>
+    <div id="embed">
+      &lt;div id="scalave"&gt;&lt;/div&gt;<br />
+      &lt;script src="scalave.js"&gt;&lt;/script&gt;
     </div>
   </body>
 </head>
