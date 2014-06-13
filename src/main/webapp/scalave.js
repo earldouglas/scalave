@@ -3,6 +3,9 @@ function scalave_println(out) {
   while (output.firstChild) { output.removeChild(output.firstChild); }
   var pre = document.createElement('pre');
   pre.className = 'scalave_output';
+  pre.style.paddingLeft = '12px';
+  pre.style.borderLeft = '1px solid #666';
+  pre.style.fontSize = '12px';
   pre.innerHTML = out;
   output.appendChild(pre);
 }
@@ -44,8 +47,8 @@ function scalave_setup() {
 
   var scalave_output     = document.createElement('div');
   scalave_output.id      = 'scalave_output';
-  scalave_output.style.paddingLeft = '12px';
-  scalave_output.style.borderLeft = '1px solid #666';
+  scalave_output.style.fontSize = '12px';
+  scalave_output.innerHTML = '&nbsp;';
 
   var scalave            = document.getElementById('scalave');
   scalave.appendChild(scalave_input);
