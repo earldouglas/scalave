@@ -23,18 +23,38 @@
     scalave_println(output, out);
   };
 
-  function scalave_setup() {
+  function unindent(x) {
+    var stripped = x.replace(/^\s*\n/, '').replace(/\n\s*\n?$/,'');
+    var lines = stripped.split('\n');
+    var indent = 999;
+    for (var i = 0; i < lines.length; i++) {
+      var indents = lines[i].match(/^\s+/);
+      if (indents && indents.length == 1) {
+        indent = Math.min(indent, indents[0].length);
+      }
+    }
+    for (var i = 0; i < lines.length; i++) {
+      lines[i] = lines[i].replace(new RegExp('^\\s{' + indent + '}'), '');
+    }
+    return lines.join('\n');
+  }
 
-    var scalave_src        = document.createElement('textarea');
-    scalave_src.id         = prefix('src');
-    scalave_src.name       = 'src';
-    scalave_src.rows       = '8';
-    scalave_src.cols       = '72';
-    scalave_src.style.fontFamily = 'Courier New, monospace';
-    scalave_src.style.fontSize = '10pt';
+  function setup() {
 
-    var scalave_run        = document.createElement('button');
-    scalave_run.onclick =
+    var scripts = document.getElementsByTagName('script');
+    var script  = scripts[scripts.length - 1];
+
+    var src        = document.createElement('textarea');
+    src.id         = prefix('src');
+    src.name       = 'src';
+    src.rows       = '8';
+    src.cols       = '72';
+    src.style.fontFamily = 'Courier New, monospace';
+    src.style.fontSize = '10pt';
+    src.value      = unindent(script.text);
+
+    var run        = document.createElement('button');
+    run.onclick =
       function() {
         var output = document.getElementById(prefix('output'));
         scalave_println(output, "running...");
@@ -47,30 +67,28 @@
         head.removeChild(script);
       };
 
-    scalave_run.innerHTML  = 'run';
+    run.innerHTML  = 'run';
 
-    var scalave_input_div1 = document.createElement('div');
-    scalave_input_div1.appendChild(scalave_src);
-    var scalave_input_div2 = document.createElement('div');
-    scalave_input_div2.appendChild(scalave_run);
+    var input_div1 = document.createElement('div');
+    input_div1.appendChild(src);
+    var input_div2 = document.createElement('div');
+    input_div2.appendChild(run);
 
-    var scalave_input      = document.createElement('div');
-    scalave_input.style.marginBottom = '24px';
-    scalave_input.appendChild(scalave_input_div1);
-    scalave_input.appendChild(scalave_input_div2);
+    var input      = document.createElement('div');
+    input.style.marginBottom = '24px';
+    input.appendChild(input_div1);
+    input.appendChild(input_div2);
 
-    var scalave_output     = document.createElement('div');
-    scalave_output.id      = prefix('output');
-    scalave_output.style.fontSize = '12px';
-    scalave_output.innerHTML = '&nbsp;';
+    var output     = document.createElement('div');
+    output.id      = prefix('output');
+    output.style.fontSize = '12px';
+    output.innerHTML = '&nbsp;';
 
-    var scripts = document.getElementsByTagName('script');
-    var script  = scripts[scripts.length - 1];
-    script.parentNode.insertBefore(scalave_output, script.nextSibling);
-    script.parentNode.insertBefore(scalave_input, script.nextSibling);
+    script.parentNode.insertBefore(output, script.nextSibling);
+    script.parentNode.insertBefore(input, script.nextSibling);
 
   }
 
-  scalave_setup();
+  setup();
 
 })();

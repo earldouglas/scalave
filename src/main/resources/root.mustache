@@ -12,12 +12,41 @@
       <img id="forkme" src="forkme.png" alt="fork me">
     </a>
     <img id="logo" src="scalave.png" alt="scalave">
-    <script src="scalave.js"></script>
+    <script src="scalave.js">
+
+      object Maths {
+        def add(a: Int, b: Int): Int = a + b
+      }
+
+      val x = 11
+      val y = 31
+
+      Maths.add(x, y)
+
+    </script>
     <p>
       To embed Scalave on your site, add the following snippet:
     </p>
-    <div id="embed">
+    <pre>
       &lt;script src="//scalave.herokuapp.com/scalave.js"&gt;&lt;/script&gt;
-    </div>
+    </pre>
+    <p>
+      To include default Scala code, simply embed it within the <tt>script</tt>
+      element:
+    </p>
+    <pre>
+      &lt;script src="//scalave.herokuapp.com/scalave.js"&gt;
+
+        object Maths {
+          def add(a: Int, b: Int): Int = a + b
+        }
+
+        val x = 11
+        val y = 31
+
+        Maths.add(x, y)
+
+      &lt;/script&gt;
+    </pre>
   </body>
 </head>
