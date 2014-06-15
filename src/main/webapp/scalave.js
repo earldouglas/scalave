@@ -61,7 +61,7 @@
         var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
         var src = encodeURIComponent(document.getElementById(prefix('src')).value);
-        var url = '//scalave.herokuapp.com/?jsonp=' + prefix('println') + '&src=' + src;
+        var url = '//scalave.earldouglas.com/?jsonp=' + prefix('println') + '&src=' + src;
         script.setAttribute('src', url);
         head.appendChild(script);
         head.removeChild(script);
