@@ -11,11 +11,12 @@ object `package` {
   mf.setObjectHandler(new com.twitter.mustache.ScalaObjectHandler)
 
   implicit class MustacheResponse(res: HttpServletResponse) {
-    def mustache[A](template: String, model: A): Unit = {
+    def mustache[A](templateName: String, model: A): Unit = {
       res.setContentType("text/html")
       res.setCharacterEncoding("UTF-8")
-      val path = getClass.getClassLoader.getResource(template + ".mustache").getFile
-      val mustache = mf.compile(path)
+      val is = getClass.getClassLoader.getResourceAsStream(templateName + ".mustache")
+      val reader = new java.io.InputStreamReader(is)
+      val mustache = mf.compile(reader, templateName)
       mustache.execute(res.getWriter, model)
     }
   }
