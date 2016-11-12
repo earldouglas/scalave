@@ -74,7 +74,7 @@
         var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
         var srcEnc = encodeURIComponent(src.value);
-        var url = '//scalave.herokuapp.com/?jsonp=' + callbackName + '&src=' + srcEnc;
+        var url = '?jsonp=' + callbackName + '&src=' + srcEnc;
         script.setAttribute('src', url);
         head.appendChild(script);
         head.removeChild(script);
