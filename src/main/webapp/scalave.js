@@ -74,7 +74,8 @@
         var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
         var srcEnc = encodeURIComponent(src.value);
-        var url = '?jsonp=' + callbackName + '&src=' + srcEnc;
+        var url = 'https://earldouglas.com/projects/scalave/?jsonp=' +
+                  callbackName + '&src=' + srcEnc;
         script.setAttribute('src', url);
         head.appendChild(script);
         head.removeChild(script);
