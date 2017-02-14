@@ -26,9 +26,11 @@ CoverallsPlugin.coverallsSettings
 val linkWar = taskKey[Unit]("Symlink the packaged .war file")
 
 linkWar := {
-  val (art, pkg) = packagedArtifact.in(Compile, packageWar).value
+  val (art, pkg) = packagedArtifact.in(Compile, sbt.Keys.`package`).value
   import java.nio.file.Files
   val link = (target.value / (art.name + "." + art.extension))
   link.delete
   Files.createSymbolicLink(link.toPath, pkg.toPath)
 }
+
+enablePlugins(JettyPlugin)
