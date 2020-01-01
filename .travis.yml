@@ -1,5 +1,0 @@
-language: scala
-scala:
-- 2.10.3
-script: sbt coveralls test
-after_success: sbt clean herokuDeploy
