@@ -1,6 +1,6 @@
 # Scalave
 
-[![Build Status](https://travis-ci.org/earldouglas/scalave.svg)](https://travis-ci.org/earldouglas/scalave)
+![Build Status](https://github.com/earldouglas/scalave/workflows/build/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/earldouglas/scalave/badge.png)](https://coveralls.io/r/earldouglas/scalave)
 
 ## Demo
