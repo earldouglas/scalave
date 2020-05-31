@@ -8,7 +8,6 @@ import com.earldouglas.scalave.evaluator.Evaluator
 object `package` {
 
   private val mf = new com.github.mustachejava.DefaultMustacheFactory()
-  mf.setObjectHandler(new com.twitter.mustache.ScalaObjectHandler)
 
   implicit class MustacheResponse(res: HttpServletResponse) {
     def mustache[A](templateName: String, model: A): Unit = {
